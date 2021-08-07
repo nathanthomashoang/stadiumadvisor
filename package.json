@@ -4,7 +4,8 @@
   "description": "find and review stadiums across the nation.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "NathanHoang",
   "license": "ISC",
