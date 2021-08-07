@@ -1,0 +1,146 @@
+<% layout('/layouts/boilerplate') %>
+  <link rel="stylesheet" href="/stylesheets/stars.css">
+  <div class="row">
+    <div class="col-lg-6 mb-3">
+      <div class="card showStadiumCard">
+          <div>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <% stadium.images.forEach((img, i) => { %>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i %> " class="<%= i === 0 ? 'active':''%>" aria-current="<%= i === 0 ? 'true':''%>" aria-label="Slide <%= i %>"></button>
+                <% }) %> 
+              </div>
+              <div class="carousel-inner">
+                <% stadium.images.forEach((img, i) => { %>
+                  <div class="carousel-item <%= i === 0 ? 'active': ''%>">
+                    <img src="<%= img.url %> " class="d-block w-100 card-img-top" alt="">
+                  </div>
+                <% }) %> 
+              </div>
+              <% if (stadium.images.length > 1) { %> 
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            <% }  %> 
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= stadium.title %>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <%= stadium.location %>
+            </h6>
+            <div class="mb-2">
+              <p class="starability-result mb-1" data-rating="<%= Math.round(stadium.avgRating) %>"></p>
+              (<%= stadium.avgRating %> out of 5) -
+              <a class="text-nowrap" href="#reviewDisplay">(<%= stadium.reviewCount %> reviews)</a>
+            </div>
+            <p class="card-text mb-2 text-muted">Posted By: <%= stadium.owner.username %>
+            </p>
+            <hr>
+            <p class="card-text">
+              <%= stadium.description %>
+            </p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Primary Team: <%= stadium.team %>
+            </li>
+            <li class="list-group-item">Capacity: <%= stadium.capacity.toLocaleString('en-US') %>
+            </li>
+          </ul>
+          <% if(currentUser && stadium.owner.equals(currentUser._id)) {%>
+            <div class="card-footer">
+              <a href="/stadia/<%= stadium._id %>/edit" class="btn btn-warning">Edit</a>
+              <form action="/stadia/<%= stadium._id %>?_method=DELETE" method="POST" class="d-inline">
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+            <% }%>
+      </div>
+    </div> <!-- col -->
+    <div class="col-lg-6">
+      <!-- map -->
+      <div id="map" class="mb-3"></div>
+      <!-- add review-->
+      <% if(currentUser && !stadium.reviews.some((reviewArray) => { %>
+           <%  return reviewArray.owner.equals(currentUser._id) })) { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="addReview mb-3">
+              <h2>Add a review:</h2>
+              <form action="/stadia/<%= stadium._id %>/reviews" method="POST" novalidate class="needs-validation">
+                <!-- star ability -->
+                <fieldset class="starability-basic">
+                  <input type="radio" id="rate1" name="review[rating]" value="1" />
+                  <label for="rate1">1 star.</label>
+    
+                  <input type="radio" id="rate2" name="review[rating]" value="2" />
+                  <label for="rate2">2 stars.</label>
+    
+                  <input type="radio" id="rate3" name="review[rating]" value="3" checked />
+                  <label for="rate3">3 stars.</label>
+    
+                  <input type="radio" id="rate4" name="review[rating]" value="4" />
+                  <label for="rate4">4 stars.</label>
+    
+                  <input type="radio" id="rate5" name="review[rating]" value="5" />
+                  <label for="rate5">5 stars.</label>
+    
+                  <span class="starability-focus-ring"></span>
+                </fieldset>
+                <!-- /star ability -->
+                <div class="mb-3">
+                  <label class="form-label" for="reviewText">Review Text:</label>
+                  <textarea class="form-control" name="review[body]" id="reviewText" cols="30" rows="10"
+                    required></textarea>
+                </div>
+                <button class="btn btn-primary">Submit</button>
+              </form>
+            </div> <!-- addReview div-->
+          </div>
+        </div>
+        <% }else if (currentUser) {%>
+          <div class="card mb-3">
+            <div class="card-body">
+              <p class="card-text text-center"><b>You have written a review for this stadium</b></p>
+            </div>
+          </div>
+        <% }%>
+          <div class="reviewDisplay" id="reviewDisplay">
+            <h3>Reviews(<%= stadium.reviewCount %>):</h3>
+            <% for (let review of stadium.reviews) { %>
+              <div class="card my-3">
+                <div class="card-body">
+                  <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                  <h5 class="card-title">Posted By: <%= review.username %>
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= review.date %> </h6>
+                  <p class="card-text">
+                    <%= review.body %>
+                  </p>
+                  <% if (currentUser && review.owner.equals(currentUser._id)) { %>
+                    <form class="card-link d-inline" method="POST"
+                      action="/stadia/<%=stadium._id%>/reviews/<%=review._id%>?_method=DELETE">
+                      <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                </div> <!-- card-body div -->
+              </div> <!-- card div -->
+              <% } %>
+          </div> <!-- reviewDisplay div -->
+    </div> <!-- col -->
+  </div> <!-- row -->
+
+
+  <script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const stadium = <%- JSON.stringify(stadium) %>
+  </script>
+
+  <script src="/javascripts/showPageMap.js"></script>

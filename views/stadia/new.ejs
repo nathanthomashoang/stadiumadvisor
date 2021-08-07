@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center">Add a new stadium</h1>
+                    <form action="/stadia" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Name:</label>
+                            <input class="form-control" type="text" id="title" name="stadium[title]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location:</label>
+                            <input class="form-control" type="text" id="location" name="stadium[location]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacity" class="form-label">Capacity:</label>
+                            <input class="form-control" type="number" id="capacity" name="stadium[capacity]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="team" class="form-label">Primary Team:</label>
+                            <input class="form-control" type="text" id="team" name="stadium[team]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea class="form-control" id="description" cols="30" rows="10"
+                                name="stadium[description]" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Upload Image(s) - (5 file limit, 5mb max size)</label>
+                            <input class="form-control" type="file" id="images" name="images" required multiple>
+                        </div>
+                        <button class="btn btn-primary">Add Stadium</button>
+                    </form>
+                </div> <!-- Card-body -->
+            </div> <!-- Card -->
+        </div> <!-- Col -->
+    </div> <!-- Row -->

@@ -1,0 +1,25 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h2 class="text-center">Select image(s) to delete</h2>
+                    <p><%= stadium.title %> </p>
+                    <form action="/stadia/<%= stadium._id %>/images?_method=DELETE" method="POST" novalidate class="needs-validation">
+                        <div class="row mb-3">
+                        <% stadium.images.forEach((img, i) => { %>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-check-inline">
+                                    <input type="checkbox" id="image-<%= i %>" name="deleteImgs[]" value="<%= img.filename %>">
+                                </div>
+                                <label for="image-<%= i %>">Delete</label>
+                                <img src="<%= img.thumbnail %>" class="img-fluid" alt="">
+                            </div>
+                        <% }) %> 
+                        </div>
+                        <button class="btn btn-primary">Delete</button>
+                    </form>
+                </div> <!-- Card-body -->
+            </div> <!-- Card -->
+        </div> <!-- Col -->
+    </div> <!-- Row -->

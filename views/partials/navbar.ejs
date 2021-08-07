@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid" id="navBarContent">
+      <a class="navbar-brand p-0" href="/"><img height="40px" width="175px" src="/images/3eacf1b039104966bbef688ccec76fcf (2).png" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <div class="d-lg-none mt-3">
+            <% if (!currentUser) { %> 
+              <a class="nav-link btn btn-success text-white rounded-pill my-3" href="/login">Login</a>
+              <a class="nav-link" href="/register"><strong>Register</strong></a>
+              <%}else { %>
+              <span class="navbar-text">
+                <b>Logged in as: <%= currentUser.username %></b>
+              </span>
+              <a class="nav-link" href="/logout">Logout</a>
+            <%} %>
+          </div>
+          <a class="nav-link" href="/stadia">All Stadiums</a>
+          <a class="nav-link" href="/stadia/new">Add new stadium</a>
+        </div>
+        <div class="navbar-nav ms-auto d-none d-lg-inline-flex">
+          <% if (!currentUser) { %> 
+          <a class="nav-link btn btn-success text-white rounded-pill px-4" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+          <%}else { %>
+          <span class="navbar-text">
+            <b>Logged in as: <%= currentUser.username %></b>
+          </span>
+          <a class="nav-link" href="/logout">Logout</a>
+          <%} %>
+        </div>
+      </div>
+    </div>
+  </nav>

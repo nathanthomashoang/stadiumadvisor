@@ -1,0 +1,41 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h1 class="text-center">Edit stadium</h1>
+                    <form action="/stadia/<%= stadium._id %>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label" for="title">Name:</label>
+                            <input class="form-control" type="text" id="title" name="stadium[title]" value="<%= stadium.title %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="location">Location:</label>
+                            <input class="form-control" type="text" id="location" name="stadium[location]" value="<%= stadium.location %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="capacity">Capacity:</label>
+                            <input class="form-control" type="number" id="capacity" name="stadium[capacity]" value="<%= stadium.capacity %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="team">Primary Team:</label>
+                            <input class="form-control" type="text" id="team" name="stadium[team]" value="<%= stadium.team %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Description:</label>
+                            <textarea class="form-control" id="description" type="text" cols="30" rows="10" name="stadium[description]"><%= stadium.description %></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Add Image(s) - (5mb max size)</label>
+                            <input class="form-control" type="file" id="images" name="images" multiple>
+                        </div>
+                        <div class="mb-3">
+                            <a href="/stadia/<%= stadium._id %>/images">Delete Existing Image(s)</a>
+                        </div>
+                        <button class="btn btn-primary">Save Changes</button>
+                        <a href="/stadia/<%= stadium._id %>">Back to stadium</a>
+                    </form>
+                </div> <!-- Card-body -->
+            </div> <!-- Card -->
+        </div> <!-- Col -->
+    </div> <!-- Row -->
