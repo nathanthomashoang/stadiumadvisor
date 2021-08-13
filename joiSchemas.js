@@ -13,7 +13,7 @@ const extension = (joi) => ({
             validate(value, helpers) {
                 const clean = sanitizeHtml(value, {
                     allowedTags: [],
-                    allowedAttributes: {},
+                    allowedAttributes: {}
                 });
                 if (clean !== value) return helpers.error('string.escapeHTML', { value })
                 return clean;
@@ -30,7 +30,7 @@ module.exports.stadiumSchema = Joi.object({
         location: Joi.string().required().escapeHTML(),
         capacity: Joi.number().required().min(0).max(200000),
         team: Joi.string().required().escapeHTML(),
-        description: Joi.string().required().escapeHTML(),
+        description: Joi.string().required().escapeHTML().max(750),
         // images: Joi.string().required()
     }).required(),
     deleteImgs: Joi.array()

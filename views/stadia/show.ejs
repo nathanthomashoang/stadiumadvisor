@@ -44,12 +44,11 @@
             <p class="card-text mb-2 text-muted">Posted By: <%= stadium.owner.username %>
             </p>
             <hr>
-            <p class="card-text">
-              <%= stadium.description %>
+            <p class="card-text" id="stadiumDescription"><%= stadium.description %>
             </p>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Primary Team: <%= stadium.team %>
+            <li class="list-group-item">Tenant(s): <%= stadium.team %>
             </li>
             <li class="list-group-item">Capacity: <%= stadium.capacity.toLocaleString('en-US') %>
             </li>

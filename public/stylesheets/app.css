@@ -26,6 +26,10 @@ footer {
     max-width: 1350px;
 }
 
+#stadiumDescription {
+    white-space: pre-line;
+}
+
 .showStadiumCard, .showStadiumCard .card-img-top{
  border-radius: 25px 25px 0px 0px;   
 }
